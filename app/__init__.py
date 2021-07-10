@@ -14,3 +14,15 @@ login_manager = LoginManager()
 def create_app(config_name="dev"):
     app = Flask(__name__)
     app.config.from_object(config_by_name[config_name])
+
+    # Flask SQLAlchemy
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    compress.init_app(app)
+
+    # Flask Login
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
+
+    return app
